@@ -1,0 +1,14 @@
+app/
+outputs/
+work/
+setup-build.nsi
+.env
+.env.*
+!.env.example
+node_modules/
+*.log
+*.user
+*.suo
+.vs/
+.DS_Store
+Thumbs.db

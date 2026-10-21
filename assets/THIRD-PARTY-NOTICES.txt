@@ -1,0 +1,37 @@
+Argo Desktop 0.3.0 — unofficial interoperability client
+
+This application is not affiliated with, endorsed by, or an official product
+of ArgoVPN, SagerNet, WireGuard LLC, or the Node.js project.
+
+Bundled, unmodified third-party components:
+
+1. Node.js v24.19.0, Windows x64
+   https://nodejs.org/
+   License: MIT, with additional third-party notices in the complete license.
+   Complete license: runtime/NODE-LICENSE.txt
+
+2. sing-box v1.14.3, Windows AMD64
+   Copyright (C) 2022 by nekohasekai <contact-sagernet@sekai.icu>
+   https://github.com/SagerNet/sing-box
+   License: GNU GPL version 3 or later, with the naming notice reproduced in
+   licenses/SING-BOX-NOTICE.txt. Full GPL: licenses/GPL-3.0.txt
+   Exact corresponding upstream source is included in:
+   licenses/sing-box-1.14.3-source.zip
+   Revision: 7054cac5124465ffdb145870d7c01885566711b1
+   Build instructions and Go dependency manifests are inside that archive.
+   Official release: https://github.com/SagerNet/sing-box/releases/tag/v1.14.3
+   Argo Desktop controls this separate executable through configuration files
+   and a local authenticated API; the executable has not been modified.
+
+3. Wintun v0.14.1 AMD64 prebuilt DLL
+   Copyright WireGuard LLC.
+   https://www.wintun.net/
+   License: Wintun Prebuilt Binaries License, reproduced in full at
+   licenses/WINTUN-LICENSE.txt. The DLL is unmodified and used by sing-box
+   through the permitted Wintun API. Its official digital signature is retained.
+
+No original Android APK, decompiled application source, or original Go native
+library is redistributed in this installer. The authentication client is an
+independent implementation. Embedded verification/encryption public keys and
+the signed public server configuration are interoperability data; they do not
+include private keys or persistent session credentials.

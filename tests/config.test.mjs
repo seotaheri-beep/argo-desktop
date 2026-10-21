@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {makeEngineConfig,makeStoppedConfig} from '../src/engine.mjs';
+const s={serverIp:'203.0.113.1',hostName:'example.invalid',uuid:'11111111-1111-4111-8111-111111111111',headers:{Host:'AUTO'},wsPath:'/'};
+const proxy=makeEngineConfig(s,{mode:'proxy',port:10808,apiPort:19090,secret:'fixture'});
+const full=makeEngineConfig(s,{mode:'full',port:10808,apiPort:19090,secret:'fixture'});
+assert.equal(proxy.inbounds.length,1);assert.equal(proxy.inbounds[0].type,'mixed');assert.equal(proxy.inbounds[0].listen,'127.0.0.1');assert.equal(proxy.route.auto_detect_interface,false);
+assert.equal(full.inbounds.length,2);const tun=full.inbounds.find(x=>x.type==='tun');
+assert(tun.address.some(a=>a.includes('.'))&&tun.address.some(a=>a.includes(':')));assert(tun.auto_route&&tun.strict_route);assert.equal(tun.dns_mode,'hijack');assert.equal(full.route.auto_detect_interface,true);
+assert.equal(full.outbounds.length,1);assert.equal(full.outbounds[0].type,'vmess');assert.equal(full.outbounds[0].tls.insecure,false);assert.equal(full.outbounds[0].server,s.serverIp);assert.equal(full.outbounds[0].tls.server_name,s.hostName);
+assert.equal(full.dns.servers[0].detour,'argo');assert.equal(full.dns.servers[0].type,'https');assert.deepEqual(full.route.rules[0].inbound,['windows-tun']);
+const stopped=makeStoppedConfig(19090,'fixture');assert.equal(stopped.inbounds.length,0);assert.equal(stopped.outbounds[0].type,'block');
+assert.throws(()=>makeEngineConfig({...s,serverIp:'example.invalid'},{mode:'full'}));assert.throws(()=>makeEngineConfig(s,{mode:'other'}));
+console.log('Mode isolation, dual-stack TUN routing, DNS detour, TLS validation, and tunnel-free shutdown configuration passed.');
